@@ -1,106 +1,134 @@
-'use client';
-import { useMemo, useState, useRef } from 'react';
+import { DownloadImageButton } from "@/components/download-image-button"
+import { EmptyPlaceholder } from "@/components/empty-placeholder"
+import { GenerationPagePagination } from "@/components/generations-pagination"
+import { DashboardHeader } from "@/components/header"
+import { ImageOptions } from "@/components/image-options"
+import { RemoveBackgroundButton } from "@/components/remove-background-button"
+import { SearchGenerationsInput } from "@/components/search-generations-input"
+import { DashboardShell } from "@/components/shell"
+import { Button } from "@/components/ui/button"
 import {
-  Editor,
-  Transforms,
-  createEditor,
-  Descendent,
-  Element as SlateElement,
- } from 'slate';
-import { withHistory } from 'slate-history';
-import { Slate, Editable, withReact } from 'slate-react';
-import SignaturePad from 'react-signature-canvas';
-import { PlusCircle } from "lucide-react"
+    HoverCard,
+    HoverCardContent,
+    HoverCardTrigger,
+} from "@/components/ui/hover-card"
+import { authOptions } from "@/lib/auth"
+import { getUserGenerations, preloadGenerations } from "@/lib/generations"
+import { getCurrentUser } from "@/lib/session"
+import Image from "next/image"
+import Link from "next/link"
+import { redirect } from "next/navigation"
 
-const HOTKEYS = {
-  'mod+b': 'bold',
-  'mod+i': 'italic',
-  'mod+u': 'underline',
-  'mod+`': 'code',
+export const metadata = {
+    title: "Generations",
+    description: "View all of your past generations",
 }
 
-const LIST_TYPES = ['numbered-list', 'bulleted-list']
-const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify']
+export default async function GenerationPage({
+    searchParams,
+}: {
+    searchParams: { [key: string]: string | undefined }
+}) {
+    const page = parseInt(searchParams?.page ?? "1") ?? 1
 
-const initialValue = [
-  {
-    type: 'paragraph',
-    children: [{ text: 'Start typing your waiver here...' }],
-  },
-];
+    const search = searchParams?.search ?? undefined
 
-export default function WaiverCreator() {
-  const editor = useMemo(() => withReact(createEditor()), []);
-  const [value, setValue] = useState(initialValue);
-  const sigCanvas = useRef({});
-  const [signatures, setSignatures] = useState([]);
+    const user = await getCurrentUser()
 
-  const addSignature = () => {
-    let trimmedSignature = sigCanvas.current.getTrimmedCanvas().toDataURL('image/png');
-    setSignatures([...signatures, trimmedSignature]);
-    sigCanvas.current.clear();
-  };
+    if (!user) {
+        redirect(authOptions?.pages?.signIn || "/login")
+    }
 
-  return (
-    <div className="flex justify-center items-center h-screen bg-gray-200">
-      <div className="w-2/3 bg-white p-8 rounded shadow">
-        <Slate editor={editor} initialValue={value} onChange={newValue => setValue(newValue)}>
-         <Toolbar>
-        <MarkButton format="bold" icon="format_bold" />
-        <MarkButton format="italic" icon="format_italic" />
-        <MarkButton format="underline" icon="format_underlined" />
-        <MarkButton format="code" icon="code" />
-        <BlockButton format="heading-one" icon="looks_one" />
-        <BlockButton format="heading-two" icon="looks_two" />
-        <BlockButton format="block-quote" icon="format_quote" />
-        <BlockButton format="numbered-list" icon="format_list_numbered" />
-        <BlockButton format="bulleted-list" icon="format_list_bulleted" />
-        <BlockButton format="left" icon="format_align_left" />
-        <BlockButton format="center" icon="format_align_center" />
-        <BlockButton format="right" icon="format_align_right" />
-        <BlockButton format="justify" icon="format_align_justify" />
-      </Toolbar>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-2xl">Create your waiver</h2>
-            <div className="flex items-center">
-              <button
-                className="flex items-center justify-center bg-blue-500 text-white px-4 py-2 rounded"
-                onClick={addSignature}
-              >
-                <PlusCircle size={48} className="h-5 w-5 mr-1" />
-                Add Signature
-              </button>
-            </div>
-          </div>
-          <Editable
-            className="mb-4 p-4 border-2 border-gray-300 rounded"
-            placeholder="Enter some text..."
-          />
-        </Slate>
+    preloadGenerations({ search, page: page + 1 })
 
-        <div>
-        <h1>Sign Below:</h1>
-        </div>
-        <SignaturePad
-          className="border-2 mb-4 border-black-300 rounded"
-          ref={sigCanvas}
-          canvasProps={{ className: 'signatureCanvas' }}
-        />
-        <div>
-        <br></br>
-        <hr></hr>
-        </div>
+    const generationQuery = getUserGenerations({ page, search })
 
+    const generatedImages = await generationQuery
 
-        <div className="mt-4 border-gray-300 rounded">
-          {signatures.map((signature, index) => (
-            <div key={index} className="mb-2">
-              <img src={signature} alt={`signature-${index}`} className="border-2 border-gray-300 rounded" />
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
+    return (
+        <DashboardShell>
+            <DashboardHeader
+                heading="Generations"
+                text="View all of your generations here"
+            >
+                <SearchGenerationsInput />
+            </DashboardHeader>
+            {generatedImages?.length ? (
+                <>
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+                        {generatedImages.map((generatedImage) => (
+                            <HoverCard>
+                                <HoverCardTrigger asChild>
+                                    <div className="relative rounded-lg overflow-hidden border">
+                                        <div className="absolute top-2 right-2 z-10">
+                                            <ImageOptions
+                                                name={generatedImage.seed}
+                                                imageId={generatedImage.id}
+                                                src={
+                                                    generatedImage.pixelatedImage
+                                                }
+                                            />
+                                        </div>
+                                        <Link
+                                            href={`/i/${generatedImage.id}`}
+                                            className={`rounded-lg  overflow-hidden`}
+                                            key={generatedImage.id}
+                                        >
+                                            <Image
+                                                unoptimized
+                                                alt={
+                                                    generatedImage.generation
+                                                        .prompt
+                                                }
+                                                height={512}
+                                                width={512}
+                                                src={
+                                                    generatedImage.pixelatedImage
+                                                }
+                                            />
+                                        </Link>
+                                    </div>
+                                </HoverCardTrigger>
+                                <HoverCardContent className="w-80">
+                                    <p className="text-sm text-primary">
+                                        {generatedImage.generation.prompt}
+                                    </p>
+                                </HoverCardContent>
+                            </HoverCard>
+                        ))}
+                    </div>
+                    {/* @ts-expect-error */}
+                    <GenerationPagePagination page={page} search={search} />
+                </>
+            ) : (
+                <>
+                    {search ? (
+                        <EmptyPlaceholder>
+                            <EmptyPlaceholder.Icon name="terminal" />
+                            <EmptyPlaceholder.Title>
+                                No generations match your search term
+                            </EmptyPlaceholder.Title>
+                            <EmptyPlaceholder.Description className="mb-0 pb-0">
+                                Try refining your search term
+                            </EmptyPlaceholder.Description>
+                        </EmptyPlaceholder>
+                    ) : (
+                        <EmptyPlaceholder>
+                            <EmptyPlaceholder.Icon name="terminal" />
+                            <EmptyPlaceholder.Title>
+                                No generations created
+                            </EmptyPlaceholder.Title>
+                            <EmptyPlaceholder.Description>
+                                You don&apos;t have any generations yet. Start
+                                creating images!
+                            </EmptyPlaceholder.Description>
+                            <Link href="/dashboard">
+                                <Button>Start creating</Button>
+                            </Link>
+                        </EmptyPlaceholder>
+                    )}
+                </>
+            )}
+        </DashboardShell>
+    )
 }
-

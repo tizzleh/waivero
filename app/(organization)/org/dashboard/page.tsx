@@ -1,5 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
+import WaiverCard from '@/components/waiver-card';
+import NotifyUsers  from '@/components/waiver/org/dashboard/notify-users';
 import { List, Edit2, Eye, Settings, User, Home } from 'lucide-react';
 
 const Dashboard: React.FC = () => {
@@ -46,18 +48,22 @@ const Dashboard: React.FC = () => {
         <h2 className="text-xl text-black mb-4">Welcome to your dashboard</h2>
         <div className="grid grid-cols-3 gap-4">
           {/* Replace these divs with your card components */}
+            <WaiverCard />
           <div className="bg-white p-4 rounded shadow">
             <h3>Card 1</h3>
             <h3>Your locations</h3>
-            <p>You don't seem to have any locations, please add your facility. If you're collecting waivers
-            for an event with no fixed venue, please select "Create Event"</p>
-            <p>Organization should be able to view the waivers that have been signed...</p>
+            <p className="flex flex-wrap">You don't seem to have any locations, please add your facility.
+            for This is just a bunch of filler to make sure this thing is allowing flex-wrap.
+            an event with no fixed venue, please select "Create Event"</p>
           </div>
           <div className="bg-white p-4 rounded shadow">
-            <h3>Card 2</h3>
+            <h3>Stone Age North</h3>
           </div>
           <div className="bg-white p-4 rounded shadow">
-            <h3>Card 3</h3>
+            <h3>Stone Age Midtown</h3>
+          </div>
+          <div>
+          <NotifyUsers />
           </div>
         </div>
       </main>
