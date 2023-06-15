@@ -12,6 +12,11 @@ datasource db {
   // relationMode = "prisma"
 }
 
+model Test {
+  id   Int     @id @default(autoincrement())
+  data String
+}
+
 model Account {
   id                String   @id @default(cuid())
   userId            String
@@ -56,10 +61,16 @@ model Organization {
   createdAt      DateTime           @default(now()) @map(name: "created_at")
   updatedAt      DateTime           @default(now()) @map(name: "updated_at")
   locations      Location[]
-  waivers        Waiver[]
+  // waivers        Waiver[]
   purchases      Purchase[]
   waiverTemplate WaiverTemplate[]
   users          UserOrganization[]
+
+  stripePlanId           String?            @map(name: "stripe_plan_id")
+  stripeCurrentPeriodEnd DateTime?          @map(name: "stripe_current_period_end")
+  stripeSubscriptionId   String?            @unique @map(name: "stripe_subscription_id")
+  stripePriceId          String?            @map(name: "stripe_price_id")
+  stripeProductId        String?            @map(name: "stripe_product_id")
 }
 
 model Template {
@@ -106,40 +117,27 @@ model User {
   purchases     Purchase[]
   accounts      Account[]
   sessions      Session[]
-  waivers       Waiver[]
+  // waivers       Waiver[]
   role          Role       @default(GUEST)
 
-  usersReferred User[] @relation("ReferrerToUser")
-
-  referredByUserId String?
-  referredByUser   User?   @relation("ReferrerToUser", fields: [referredByUserId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  credits                   Int @default(4)
-  feedbackCreditsGranted    Int @default(0)
-  creditsEarnedViaReferrals Int @default(0)
-
-  stripeCustomerId       String?            @unique @map(name: "stripe_customer_id")
-  stripeSubscriptionId   String?            @unique @map(name: "stripe_subscription_id")
-  stripePriceId          String?            @map(name: "stripe_price_id")
-  stripeCurrentPeriodEnd DateTime?          @map(name: "stripe_current_period_end")
   UserOrganization       UserOrganization[]
 
-  @@index([referredByUserId])
   @@map(name: "users")
 }
 
 model Waiver {
   id             Int            @id @default(autoincrement())
-  userId         String
-  templateId     String
-  organizationId String
+//  userId         String
+//  templateId     String
+//  organizationId String
   signature      String
-  waiverPdf      String
-  user           User           @relation(fields: [userId], references: [id])
-  template       WaiverTemplate @relation(fields: [templateId], references: [id])
-  organization   Organization   @relation(fields: [organizationId], references: [id])
+  waiverText     String
+//  waiverPdf      String
+//  user           User           @relation(fields: [userId], references: [id])
+//  template       WaiverTemplate @relation(fields: [templateId], references: [id])
+//  organization   Organization   @relation(fields: [organizationId], references: [id])
   createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
+//  pdatedAt       DateTime       @updatedAt
 }
 
 model WaiverTemplate {
@@ -150,7 +148,7 @@ model WaiverTemplate {
   updatedAt      DateTime     @updatedAt
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id])
-  waivers        Waiver[]
+  // waivers        Waiver[]
   Template       Template?    @relation(fields: [templateId], references: [id])
   templateId     String?
 }

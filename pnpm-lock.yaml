@@ -286,6 +286,9 @@ dependencies:
   uuid:
     specifier: ^9.0.0
     version: 9.0.0
+  uuid4:
+    specifier: ^2.0.3
+    version: 2.0.3
   yup:
     specifier: ^1.2.0
     version: 1.2.0
@@ -11949,6 +11952,10 @@ packages:
       is-generator-function: 1.0.10
       is-typed-array: 1.1.10
       which-typed-array: 1.1.9
+    dev: false
+
+  /uuid4@2.0.3:
+    resolution: {integrity: sha512-CTpAkEVXMNJl2ojgtpLXHgz23dh8z81u6/HEPiQFOvBc/c2pde6TVHmH4uwY0d/GLF3tb7+VDAj4+2eJaQSdZQ==}
     dev: false
 
   /uuid@3.4.0:

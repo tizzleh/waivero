@@ -97,6 +97,7 @@ export const authOptionsWithEvents = (req: NextApiRequest, res) => {
                     session.user.email = token.email
                     session.user.image = token.picture
                     session.user.credits = token.credits
+                    session.user.role = token.role
                 }
 
                 return session
@@ -120,7 +121,7 @@ export const authOptionsWithEvents = (req: NextApiRequest, res) => {
                     name: dbUser.name,
                     email: dbUser.email,
                     picture: dbUser.image,
-                    credits: dbUser.credits,
+                    role: dbUser.role,
                 }
             },
         },
