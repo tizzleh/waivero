@@ -1,6 +1,6 @@
 'use client';
 import { useState, useRef } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import SignatureCanvas from 'react-signature-canvas';
 
 const WaiverPage = () => {

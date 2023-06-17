@@ -17,3 +17,25 @@ export async function GET(
   }
 }
 
+// Define schema for the uploaded text
+const uploadTextSchema = z.object({
+  text: z.string(),
+});
+
+export async function POST(
+  req: Request,
+  context: z.infer<typeof uploadTextSchema>
+) {
+  try {
+    // Save the uploaded text to the database
+    const uploadedText = await db.waiverTemplate.create({
+      data: {
+        content: context.text,
+      },
+    });
+
+    return new Response(JSON.stringify(uploadedText), { status: 201 });
+  } catch (error) {
+    return new Response(null, { status: 500 });
+  }
+}
