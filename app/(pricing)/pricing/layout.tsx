@@ -1,5 +1,4 @@
 import { MainNav } from "@/components/main-nav"
-import { DashboardNav } from "@/components/nav"
 import { SiteFooter } from "@/components/site-footer"
 import { UserAccountNav } from "@/components/user-account-nav"
 import { dashboardConfig } from "@/config/dashboard"
@@ -19,10 +18,7 @@ export default async function DashboardLayout({
                     <UserAccountNav />
                 </div>
             </header>
-            <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr]">
-                <aside className="hidden w-[200px] flex-col md:flex">
-                    <DashboardNav items={dashboardConfig.sidebarNav} />
-                </aside>
+            <div className="container grid flex-1 gap-12 pb-24">
                 <main className="flex w-full flex-1 flex-col overflow-hidden">
                     {children}
                 </main>

@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
 import { db } from "@/lib/db"
-import { cn, pixelateImage } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 import { Repeat, FileMinus, FileText, SlidersHorizontal } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -61,6 +61,7 @@ export default async function IndexPage() {
             <section className="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32">
                 <div className="container flex max-w-[64rem] flex-col items-center gap-4 text-center">
                         <Badge variant="secondary">
+ Seamlessly Secure, Digitally Signed - Waivero
                         </Badge>
                     <h1 className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl">
                     Streamlining Signatures with Waivero
@@ -115,12 +116,10 @@ export default async function IndexPage() {
             >
                 <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
                     <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
-                        Your limit is your imagination
+                     Seamlessly Secure, Digitally Signed
                     </h2>
                     <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-                        Pixelfy provides a variety of battle-tested generators
-                        to create all types of images, and we are always adding
-                        more.
+                     Waivero is a digital waiver platform that allows you to create, deploy, and manage waivers.
                     </p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-8">
@@ -178,86 +177,101 @@ export default async function IndexPage() {
                     <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
                         Features
                     </h2>
-                    <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-                        Waivero is packed with features to help ensure ease-of-use and convenience.
+                    <p className="max-w-[85%] leading-normal text-muted-foreground pb-6 sm:text-lg sm:leading-7">
+                    From firsthand experience, we've understood the pitfalls of conventional waiver systems.
+                    The tedious navigation through convoluted pages and intricate forms, coupled with the
+                    added burden of monitoring expiry dates, present challenges that are unnecessarily complex in our modern,
+                    digital era. Such obstacles are not only time-consuming but also detract from the seamless experience we all
+                    deserve.
                     </p>
                 </div>
                 <div className="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3">
                     <div className="relative overflow-hidden rounded-lg border bg-background p-2">
-                        <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-                            <Icons.terminal size={48} />
+                        <div className="flex h-[220rh] flex-col items-center justify-between rounded-md p-6">
+                            <Icons.userPlus pb-4 size={48} />
                             <div className="space-y-2">
-                                <h3 className="font-bold">Prompt Builder</h3>
+                                <h3 className="items-center text-center font-bold">Save Profiles</h3>
+                                <hr/>
                                 <p className="text-sm text-muted-foreground">
-                                    An AI powered prompt builder to help you
-                                    create stunning images.
+                                By enabling users to securely save their profile information,
+                                the painful process of repeated data entry becomes a thing of the past.
                                 </p>
                             </div>
                         </div>
                     </div>
                     <div className="relative overflow-hidden rounded-lg border bg-background p-2">
-                        <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-                            <Icons.grid size={48} />
+                        <div className="flex h-[220rh] flex-col items-center justify-between rounded-md p-6">
+                            <Icons.fileDown pb-4 size={48} />
                             <div className="space-y-2">
-                                <h3 className="font-bold">Control grid size</h3>
+                                <h3 className="items-center text-center font-bold">Dowload Waivers</h3>
+                                <hr/>
                                 <p className="text-sm text-muted-foreground">
-                                    Choose from 16x16, 32x32, 64x64, or 128x128
-                                    grids.
+                                With Waivero, you can effortlessly download and view your signed waivers at any time
+                                and from anywhere.
                                 </p>
                             </div>
                         </div>
                     </div>
 
                     <div className="relative overflow-hidden rounded-lg border bg-background p-2">
-                        <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-                            <SlidersHorizontal size={48} />
+                        <div className="flex h-[220rh] flex-col items-center justify-between rounded-md p-6">
+                            <Icons.bellRing pb-4 size={48} />
                             <div className="space-y-2">
-                                <h3 className="font-bold">Advanced Tuning</h3>
+                                <h3 className="items-center text-center font-bold">Smart Notifications</h3>
+                                <hr/>
                                 <p className="text-sm text-muted-foreground">
-                                    Advanced options for adjusting sampling
-                                    steps and prompt guidance.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="relative overflow-hidden rounded-lg border bg-background p-2">
-                        <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-                            <FileMinus size={48} />
-                            <div className="space-y-2">
-                                <h3 className="font-bold">View Participating </h3>
-                                <p className="text-sm text-muted-foreground">
-                                    Isolate the subject of your image by
-                                    removing the background!
+                                We've integrated a smart notification system to alert users
+                                ahead of waiver expiration. Users recieve an email allowing them to sign
+                                waivers before their visit.
                                 </p>
                             </div>
                         </div>
                     </div>
 
                     <div className="relative overflow-hidden rounded-lg border bg-background p-2">
-                        <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-                            <Repeat size={48} />
+                        <div className="flex h-[220rh] flex-col items-center justify-between rounded-md p-6">
+                            <Icons.fileSignature pb-4 size={48} />
                             <div className="space-y-2">
-                                <h3 className="font-bold">
-                                    Use reference images
-                                </h3>
+                                <h3 className="items-center text-center font-bold">Electronic Signature</h3>
+                                <hr/>
                                 <p className="text-sm text-muted-foreground">
-                                    Upload your own reference images to
-                                    influence the generation.
+                                Create, apply, and validate your unique signatures on digital waivers effortlessly.
+                                With Waivero, trust in the confidence of secure, credible, and efficient digital transactions.
                                 </p>
                             </div>
                         </div>
                     </div>
+
                     <div className="relative overflow-hidden rounded-lg border bg-background p-2">
-                        <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-                            <FileText size={48} />
+                        <div className="flex h-[220rh] flex-col items-center justify-between rounded-md p-6">
+                            <Icons.layoutDashboard pb-4 size={48} />
                             <div className="space-y-2">
-                                <h3 className="font-bold">View Waivers</h3>
+                                <h3 className="items-center text-center font-bold">Organization Dashboard</h3>
+                                <hr/>
                                 <p className="text-sm text-muted-foreground">
-                                 View all of your signed waivers and renew them at your convenience.
+                                Get a real-time view of all waivers associated with your organization, sorted, and easily accessible.
+                                With Waivero, take control of your waivers, so you can focus on what really matters – running your
+                                organization smoothly.
                                 </p>
                             </div>
                         </div>
                     </div>
+
+                    <div className="relative overflow-hidden rounded-lg border bg-background p-2">
+                        <div className="flex h-[220rh] flex-col items-center justify-between rounded-md p-6">
+                            <Icons.layoutDashboard pb-4 size={48} />
+                            <div className="space-y-2">
+                                <h3 className="items-center text-center font-bold">Organization Dashboard</h3>
+                                <hr/>
+                                <p className="text-sm text-muted-foreground">
+                                Get a real-time view of all waivers associated with your organization, sorted, and easily accessible.
+                                With Waivero, take control of your waivers, so you can focus on what really matters – running your
+                                organization smoothly.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </section>
 

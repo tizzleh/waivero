@@ -11,7 +11,7 @@ export const metadata = {
 
 export default function RegisterPage() {
     return (
-        <div className="container grid h-screen w-screen flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">
+        <div className="container grid h-screen w-screen flex-col items-center justify-center lg:max-w-none lg:grid-cols-1 lg:px-0">
             <Link
                 href="/login"
                 className={cn(
@@ -33,7 +33,15 @@ export default function RegisterPage() {
                             Enter your email below to create your account
                         </p>
                     </div>
-                    <UserAuthForm />
+                    <UserAuthForm>
+                        <label className="block text-sm text-muted-foreground my-2">
+                            Register as:
+                            <select className="block w-full mt-1">
+                                <option value="organization">Organization</option>
+                                <option value="waiver">Waiver</option>
+                            </select>
+                        </label>
+                    </UserAuthForm>
                     <p className="px-8 text-center text-sm text-muted-foreground">
                         By clicking continue, you agree to our{" "}
                         <Link
@@ -56,3 +64,4 @@ export default function RegisterPage() {
         </div>
     )
 }
+

@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import { Icons } from "@/components/icons"
 import { buttonVariants } from "@/components/ui/button"
@@ -26,8 +26,10 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     } = useForm<FormData>({
         resolver: zodResolver(userAuthSchema),
     })
+
+    const [userType, setUserType] = React.useState("")
+
     const [isLoading, setIsLoading] = React.useState<boolean>(false)
-    const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false)
     const searchParams = useSearchParams()
 
     async function onSubmit(data: FormData) {
@@ -38,6 +40,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             redirect: false,
             callbackUrl: searchParams?.get("from") || "/dashboard",
         })
+
+        console.log(`User type: ${userType}`)
 
         setIsLoading(false)
 
@@ -51,8 +55,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
         return toast({
             title: "Check your email",
-            description:
-                "We sent you a login link. Be sure to check your spam too.",
+            description: "We sent you a login link. Be sure to check your spam too.",
         })
     }
 
@@ -61,6 +64,22 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="grid gap-2">
                     <div className="grid gap-1">
+                        <div className="mt-4">
+                          <button
+        type="button"
+        onClick={() => setUserType("organization")}
+        className={cn(buttonVariants({ variant: "outline" }), userType === "organization" ? "text-blue-500 border-blue-500" : "", "w-full")}
+    >
+        Register as Organization
+    </button>
+    <button
+        type="button"
+        onClick={() => setUserType("waiver")}
+        className={cn(buttonVariants({ variant: "outline" }), userType === "waiver" ? "text-blue-500 border-blue-500" : "", "w-full")}
+    >
+        Register as Waiver Signer
+    </button>
+    </div>
                         <Label className="sr-only" htmlFor="email">
                             Email
                         </Label>
@@ -79,10 +98,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                                 {errors.email.message}
                             </p>
                         )}
+
                     </div>
                     <button
                         className={cn(buttonVariants())}
-                        disabled={isLoading}
+                        disabled={isLoading || !userType}
                     >
                         {isLoading && (
                             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
@@ -108,7 +128,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                     setIsGitHubLoading(true)
                     signIn("google")
                 }}
-                disabled={isLoading || isGitHubLoading}
+                disabled={isLoading || isGitHubLoading || !userType}
             >
                 {isGitHubLoading ? (
                     <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
@@ -120,3 +140,4 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         </div>
     )
 }
+

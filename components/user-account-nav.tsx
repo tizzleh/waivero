@@ -20,19 +20,10 @@ export function UserAccountNav() {
 
     return (
         <div className="flex items-center gap-4">
-            <span className="text-xs md:text-sm text-foreground block">
-                {session && (
-                    <>
-                        {" "}
-                        {session?.user.credits.toLocaleString()} credits
-                        remaining
-                    </>
-                )}
-            </span>
             <Link href="/credits">
                 <Button className="inline-flex gap-2" size="sm">
                     <Icons.billing size={16} />
-                    <span className="hidden md:flex">Buy credits</span>
+                    <span className="hidden md:flex">Plans</span>
                 </Button>
             </Link>
 
@@ -69,7 +60,7 @@ export function UserAccountNav() {
                         <Link href="/dashboard/generations">Generations</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                        <Link href="/credits">Buy credits</Link>
+                        <Link href="/pricing">Plans and Pricing</Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem

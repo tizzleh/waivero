@@ -18,8 +18,8 @@ export const dashboardConfig: DashboardConfig = {
             icon: "terminal",
         },
         {
-            title: "Generations",
-            href: "/dashboard/generations",
+            title: "Signed Waivers",
+            href: "/dashboard/waivers",
             icon: "imagePlus",
         },
         {
@@ -28,14 +28,9 @@ export const dashboardConfig: DashboardConfig = {
             icon: "userPlus",
         },
         {
-            title: "Buy credits",
-            href: "/credits",
+            title: "Plans & Billing",
+            href: "/dashboard/billing",
             icon: "billing",
         },
-        // {
-        //     title: "Settings",
-        //     href: "/dashboard/settings",
-        //     icon: "settings",
-        // },
     ],
 }
