@@ -11,6 +11,8 @@
   font-display: swap;
 }
 
+
+
 @layer base {
     :root {
         --background: 0 0% 100%;
@@ -78,6 +80,15 @@
         --radius: 0.5rem;
     }
 }
+.ql-container.ql-snow,
+.ql-toolbar.ql-snow {
+    border: none !important;
+}
+
+.ql-toolbar.ql-snow {
+   background-color: #f1f5f9 !important;
+   border-radius: 0.3rem;
+}
 
 @layer base {
     * {
@@ -87,7 +98,9 @@
         @apply bg-background text-foreground;
         font-feature-settings: "rlig" 1, "calt" 1;
     }
+
 }
+
 
 .prose {
     --tw-prose-headings: var(--text-default);
@@ -95,6 +108,7 @@
     --tw-prose-links: var(--text-default-focus);
     --tw-prose-bold: var(--text-default-focus);
 }
+
 
 #carbonads * {
     margin: initial;

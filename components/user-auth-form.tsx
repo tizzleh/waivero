@@ -27,8 +27,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         resolver: zodResolver(userAuthSchema),
     })
 
-    const [userType, setUserType] = React.useState("")
-
     const [isLoading, setIsLoading] = React.useState<boolean>(false)
     const searchParams = useSearchParams()
 
@@ -41,7 +39,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             callbackUrl: searchParams?.get("from") || "/dashboard",
         })
 
-        console.log(`User type: ${userType}`)
 
         setIsLoading(false)
 
@@ -65,20 +62,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 <div className="grid gap-2">
                     <div className="grid gap-1">
                         <div className="mt-4">
-                          <button
-        type="button"
-        onClick={() => setUserType("organization")}
-        className={cn(buttonVariants({ variant: "outline" }), userType === "organization" ? "text-blue-500 border-blue-500" : "", "w-full")}
-    >
-        Register as Organization
-    </button>
-    <button
-        type="button"
-        onClick={() => setUserType("waiver")}
-        className={cn(buttonVariants({ variant: "outline" }), userType === "waiver" ? "text-blue-500 border-blue-500" : "", "w-full")}
-    >
-        Register as Waiver Signer
-    </button>
+
     </div>
                         <Label className="sr-only" htmlFor="email">
                             Email
@@ -90,7 +74,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                             autoCapitalize="none"
                             autoComplete="email"
                             autoCorrect="off"
-                            disabled={isLoading || isGitHubLoading}
+                            disabled={isLoading}
                             {...register("email")}
                         />
                         {errors?.email && (
@@ -102,7 +86,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                     </div>
                     <button
                         className={cn(buttonVariants())}
-                        disabled={isLoading || !userType}
+                        disabled={isLoading}
                     >
                         {isLoading && (
                             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
@@ -125,12 +109,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 type="button"
                 className={cn(buttonVariants({ variant: "outline" }))}
                 onClick={() => {
-                    setIsGitHubLoading(true)
                     signIn("google")
                 }}
-                disabled={isLoading || isGitHubLoading || !userType}
+                disabled={isLoading}
             >
-                {isGitHubLoading ? (
+                {isLoading ? (
                     <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                 ) : (
                     <Icons.google className="mr-2 h-4 w-4" />

@@ -12,11 +12,6 @@ datasource db {
   // relationMode = "prisma"
 }
 
-model Test {
-  id   Int     @id @default(autoincrement())
-  data String
-}
-
 model Account {
   id                String   @id @default(cuid())
   userId            String
@@ -118,7 +113,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   // waivers       Waiver[]
-  role          Role       @default(GUEST)
+  role          Role       @default(User)
 
   UserOrganization       UserOrganization[]
 
@@ -176,8 +171,8 @@ model VerificationToken {
 }
 
 enum Role {
-  ADMIN //Can manage orgs
-  ORGS // Organization collecting the waivers
-  USER // User who signs the waiver to the org.
-  GUEST // Not logged in, viewing the marketing page.
+  Admin //Can manage orgs
+  Org // Organization collecting the waivers
+  User // User who signs the waiver to the org.
+  Guest // Not logged in, viewing the marketing page.
 }

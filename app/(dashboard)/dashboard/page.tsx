@@ -20,7 +20,7 @@ export default async function DashboardPage() {
         <DashboardShell>
             <DashboardHeader
                 heading="Create"
-                text="Create and view pixel art generations"
+                text="Create and view waivers"
             >
                 {/* <ModelSelectButton /> */}
             </DashboardHeader>
@@ -30,7 +30,6 @@ export default async function DashboardPage() {
                     user={{
                         id: user.id,
                         name: user.name || "",
-                        credits: user.credits,
                     }}
                 />
             </div>

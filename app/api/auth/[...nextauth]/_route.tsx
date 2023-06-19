@@ -2,7 +2,6 @@ import LoginLink from "@/emails/LoginLink"
 import WelcomeEmail from "@/emails/WelcomeEmail"
 import { sendMail, sendMarketingMail } from "@/emails/index"
 import { authOptions } from "@/lib/auth"
-import { db } from "@/lib/db"
 import NextAuth from "next-auth"
 import EmailProvider from "next-auth/providers/email"
 import GoogleProvider from "next-auth/providers/google"
@@ -19,12 +18,7 @@ let authOptionsWithEvents = {
                 const name = message.user.name
 
                 if (email) {
-                  const role = message.user.role ?? 'USER';
-                  await db.user.update({
-                  where: { email: email },
-                  data: { role: role },
-                  });
-                    await Promise.all([
+                  await Promise.all([
                         sendMarketingMail({
                             subject: "🎨 Welcome to Waivero",
                             to: email,
@@ -47,7 +41,7 @@ authOptionsWithEvents.providers = [
     EmailProvider({
         sendVerificationRequest: async ({ identifier, url, provider }) => {
             await sendMail({
-                subject: "Your Pixelfy.ai Login Link",
+                subject: "Your Waivero.com Login Link",
                 to: identifier,
                 component: <LoginLink url={url} />,
             })

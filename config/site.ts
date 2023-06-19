@@ -2,12 +2,11 @@ import { SiteConfig } from "types"
 
 export const siteConfig: SiteConfig = {
     name: "Waivero",
-    description:
-        "Pixelfy is an open-source application that uses AI to generate stunning pixel art images for your creative projects. Your limit is your imagination.",
-    url: "https://pixelfy.ai",
-    ogImage: "https://pixelfy.ai/pixelfy-og.png",
+    description:"Waivero is an online waiver management system that allows you to create, sign, and manage waivers online. Waivero is a SaaS product that is built with React, TypeScript, and Firebase.",
+    url: "https://waivero.com",
+    ogImage: "https://waivero.com/waivero-og.png",
     links: {
-        twitter: "https://twitter.com/dparksdev",
-        github: "https://github.com/DavidTParks/pixelfy",
+        twitter: "https://twitter.com/",
+        github: "https://github.com/tizzleh/",
     },
 }

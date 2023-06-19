@@ -1,6 +1,5 @@
-import { cn } from "@/lib/utils"
-import ReactQuill from "react-quill"
-import React, {useEffect, useRef } from "react"
+import React, { useEffect, useRef } from 'react';
+import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // import styles
 
 export interface QuillEditorProps {
@@ -11,11 +10,11 @@ export interface QuillEditorProps {
 // Quill modules to attach to editor
 const modules = {
   toolbar: [
-    [{ header: '1' }, { header: '2' }],
+    [{ header: '1' }, { header: '2' }, { font: [] }],
     [{ size: [] }],
     ['bold', 'italic', 'underline', 'strike', 'blockquote'],
     [{ list: 'ordered' }, { list: 'bullet' }],
-    [{ 'align': [] }],
+    ['link', 'image', 'video'],
     ['clean'],
   ],
   clipboard: {
@@ -53,3 +52,4 @@ const QuillEditor: React.FC<QuillEditorProps> = ({ value, onChange }) => {
 };
 
 export { QuillEditor };
+

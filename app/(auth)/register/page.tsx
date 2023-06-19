@@ -33,15 +33,7 @@ export default function RegisterPage() {
                             Enter your email below to create your account
                         </p>
                     </div>
-                    <UserAuthForm>
-                        <label className="block text-sm text-muted-foreground my-2">
-                            Register as:
-                            <select className="block w-full mt-1">
-                                <option value="organization">Organization</option>
-                                <option value="waiver">Waiver</option>
-                            </select>
-                        </label>
-                    </UserAuthForm>
+                    <UserAuthForm />
                     <p className="px-8 text-center text-sm text-muted-foreground">
                         By clicking continue, you agree to our{" "}
                         <Link
