@@ -1,4 +1,3 @@
-import { Carbon } from "@/components/carbon"
 import { MainNav } from "@/components/main-nav"
 import { DashboardNav } from "@/components/nav"
 import { SiteFooter } from "@/components/site-footer"
@@ -27,7 +26,6 @@ export default async function DashboardLayout({
                         className="flex flex-col mt-12"
                         id="carbon-container"
                     />
-                    <Carbon />
                 </aside>
                 <main className="flex w-full flex-1 flex-col overflow-hidden">
                     {children}

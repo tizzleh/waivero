@@ -1,24 +1,23 @@
 import { db } from '@/lib/db';
 import { z } from 'zod';
 
-// Define the schema
-const createWaiverSchema = z.object({
+const createTestSchema = z.object({
   waiverText: z.string(),
-  signature: z.string(),
+  orgId: z.number(),
 });
 
 export async function POST(req, res) {
   try {
     const body = await req.json();
-    const validatedBody = createWaiverSchema.parse(body);
+    const validatedBody = createTestSchema.parse(body);
 
-    const newWaiver = await db.waiver.create({
+    const newTest = await db.waiverTemplate.create({
       data: {
         waiverText: validatedBody.waiverText,
-        signature: validatedBody.signature,
+        orgId: validatedBody.orgId,
       },
     });
-      return new Response(JSON.stringify(newWaiver), { status: 201 })
+      return new Response(JSON.stringify(newTest), { status: 201 })
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify(error.errors), { status: 400 })
@@ -28,5 +27,4 @@ export async function POST(req, res) {
     }
   }
 };
-
 

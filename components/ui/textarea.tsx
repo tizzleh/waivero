@@ -26,6 +26,27 @@ const modules = {
 const QuillEditor: React.FC<QuillEditorProps> = ({ value, onChange }) => {
   const quillRef = useRef<ReactQuill | null>(null); // Reference to Quill instance
 
+  const [formValue, setFormValue] = React.useState(value);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  try{
+     // const response = await fetch('/api/waiver/create', {
+     const response = await fetch('/api/create-waiver', {
+     method: 'POST',
+     headers: {
+       'Content-Type': 'application/json',
+     },
+     body: JSON.stringify({ waiver: formValue }),
+    });
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    } catch (error) {
+    console.error(error);
+}
+};
+
   // Set some default text using Quill's setContents method
   useEffect(() => {
     if (quillRef.current) {
@@ -48,6 +69,7 @@ const QuillEditor: React.FC<QuillEditorProps> = ({ value, onChange }) => {
       onChange={onChange}
       modules={modules}
       ref={quillRef}
+      handleSubmit={handleSubmit}
     />
   );
 };

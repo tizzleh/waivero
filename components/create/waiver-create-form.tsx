@@ -31,15 +31,6 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { toast } from "@/components/ui/use-toast"
-import {
-    findMatchingStyleFromModelId,
-    scenarioGenerators,
-    scenarioModelData,
-    sizeDisabledGenerators,
-    sizeLockedGenerators,
-    sizeLockedGeneratorsSizeValue,
-    supplementalPromptMap,
-} from "@/lib/generators"
 import { cn, convertBase64 } from "@/lib/utils"
 import { generateSchema } from "@/lib/validations/generate"
 import { ScenarioInferenceResponse } from "@/types/scenario"
@@ -58,7 +49,7 @@ interface UserNameFormProps extends React.HTMLAttributes<HTMLFormElement> {
 
 type FormData = z.infer<typeof generateSchema>
 
-export function GenerationForm({
+export function WaiverCreateForm({
     user,
     className,
     ...props
@@ -88,10 +79,11 @@ export function GenerationForm({
     const [referenceImageInfluence, setReferenceImageInfluence] =
         React.useState<number[]>([25])
 
-    const generatePrompt = async (e: any) => {
+    const getSavedWaiver= async (e: any) => {
         e.preventDefault()
 
-
+        const getWaiver = await fetch("/api/waiver", {
+        })
         const response = await fetch("/api/generate/prompt-generate", {
             method: "POST",
             headers: {
@@ -232,9 +224,10 @@ export function GenerationForm({
 
                                     <CardDescription>
                                         Please enter the text of your waiver you would like to create.
+
                                     </CardDescription>
                                 </CardHeader>
-                                <QuillEditor setValue={setValue} register={register} />
+                                <QuillEditor onSubmit={onSubmit} setValue={setValue} register={register} />
 
                                 <CardFooter className="flex-col items-start w-full">
                                     <div className="flex flex-col items-start mb-10 w-full">
@@ -258,6 +251,7 @@ export function GenerationForm({
                                     </div>
                                     <div className="flex flex-col lg:flex-row items-center gap-4 w-full mt-6">
                                     </div>
+                                    <Button variant={buttonVariants.primary} type="submit">Submit</Button>
                                 </CardFooter>
                             </Card>
                         </form>

@@ -45,13 +45,6 @@ export default async function ReferUsersPage({
         where: {
             id: user.id,
         },
-        include: {
-            _count: {
-                select: {
-                    usersReferred: true,
-                },
-            },
-        },
     })
 
     return (
@@ -92,21 +85,6 @@ export default async function ReferUsersPage({
                 <h3 className="font-heading text-xl md:text-2xl">
                     Your referral stats
                 </h3>
-                <Stats
-                    stats={[
-                        {
-                            name: "Users referred",
-                            value:
-                                userWithReferrals?._count?.usersReferred ?? 0,
-                        },
-                        {
-                            name: "Credits earned",
-                            value:
-                                userWithReferrals?.creditsEarnedViaReferrals ??
-                                0,
-                        },
-                    ]}
-                />
             </div>
 
             <div className="mt-4 grid grid-cols-1 gap-4 mb-24">

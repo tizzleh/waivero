@@ -13,7 +13,10 @@ export async function POST(req, res) {
     const validatedBody = createWaiverSchema.parse(body);
 
     const newWaiver = await db.signedWaiver.create({
-      data: validatedBody,
+      data: {
+        waiverText: validatedBody.waiverText,
+        signature: validatedBody.signature,
+      },
     });
       return new Response(JSON.stringify(newWaiver), { status: 201 })
   } catch (error) {
@@ -25,4 +28,5 @@ export async function POST(req, res) {
     }
   }
 };
+
 

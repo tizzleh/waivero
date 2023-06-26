@@ -30,6 +30,7 @@ const WaiverPage = () => {
   useEffect(() => {
     if (quillRef.current) {
       const quill = quillRef.current.getEditor();
+      // Set default content, this should be retrieved from the database
       const defaultContent = [
         { insert: 'WAIVER AND RELEASE OF LIABILITY, ASSUMPTION OF RISK AND INDEMNITY AGREEMENT\n', attributes: { bold: true, size: 'large'} },
         { insert: '\nI, the undersigned, hereby acknowledge that I have voluntarily chosen to participate in the following activities:\n' },
@@ -52,9 +53,11 @@ const WaiverPage = () => {
     } else if (action === 'submit') {
       const waiver = {
         waiverText: waiverText,
+        orgId: 420,
       };
 
-      const res = await fetch('/api/org/waiver/create', {
+      // const res = await fetch('/api/org/waiver/create', {
+      const res = await fetch('/api/create-waiver', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -68,6 +71,7 @@ const WaiverPage = () => {
 
       const data = await res.json();
       console.log(data);
+      // Let's go to the success page after saving the waiver
       router.push('/success');
     } else if (action === 'preview') {
       if (quillRef.current) {

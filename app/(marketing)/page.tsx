@@ -15,10 +15,20 @@ import { cn } from "@/lib/utils"
 import { Repeat, FileMinus, FileText, SlidersHorizontal } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { getCurrentUser } from "@/lib/session"
+import { redirect } from "next/navigation"
+import { authOptions } from "@/lib/auth"
 
 export const revalidate = 60
 
 export default async function IndexPage() {
+
+    const user = await getCurrentUser()
+
+    if (user) {
+        redirect(authOptions?.pages?.signIn || "/dashboard")
+    }
 
     const featuredCardData = [
         {

@@ -1,4 +1,4 @@
-import { GenerationForm } from "@/components/create/generation-form"
+import { WaiverCreateForm } from "@/components/create/waiver-create-form"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 import { authOptions } from "@/lib/auth"
@@ -26,7 +26,7 @@ export default async function DashboardPage() {
             </DashboardHeader>
 
             <div className="mb-24">
-                <GenerationForm
+                <WaiverCreateForm
                     user={{
                         id: user.id,
                         name: user.name || "",
